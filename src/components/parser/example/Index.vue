@@ -162,6 +162,39 @@ export default {
             on: {
               click: 'clickTestButton1'
             }
+          }, {
+            __config__: {
+              label: '上传',
+              tag: 'el-upload',
+              tagIcon: 'upload',
+              layout: 'colFormItem',
+              defaultValue: null,
+              showLabel: true,
+              labelWidth: null,
+              required: false,
+              span: 24,
+              showTip: false,
+              buttonText: '点击上传',
+              regList: [],
+              changeTag: true,
+              fileSize: 20,
+              sizeUnit: 'MB',
+              document: 'https://element.eleme.cn/#/zh-CN/component/upload',
+              formId: 103,
+              renderKey: 1659492791571
+            },
+            __slot__: {
+              'list-type': true
+            },
+            action: 'http://127.0.0.1:9080/dev-api/common/upload',
+            ':headers': 'headerObj',
+            disabled: false,
+            accept: '.pdf',
+            name: 'file',
+            'auto-upload': true,
+            'list-type': 'text',
+            multiple: false,
+            __vModel__: 'file'
           }
         ],
         __methods__: {

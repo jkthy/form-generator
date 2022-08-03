@@ -134,6 +134,9 @@ export default {
     }
     this.initFormData(data.formConfCopy.fields, data[this.formConf.formModel])
     this.buildRules(data.formConfCopy.fields, data[this.formConf.formRules])
+    // 在data里对上传文件数据进行拦截
+    debugger
+    this.bindUploadSuccess(data.formConfCopy.fields)
     return data
   },
   methods: {
@@ -142,6 +145,10 @@ export default {
         const config = cur.__config__
         if (cur.__vModel__) formData[cur.__vModel__] = config.defaultValue
         if (config.children) this.initFormData(config.children, formData)
+        // 上传组件回显数据
+        if (config.tag === 'el-upload' && config.defaultValue) {
+          cur['file-list'] = (config.defaultValue || []).map(value => ({ name: value.name, url: value.url }))
+        }
       })
     },
     buildRules(componentList, rules) {
@@ -164,6 +171,26 @@ export default {
           })
         }
         if (config.children) this.buildRules(config.children, rules)
+      })
+    },
+    // 为el-upload绑定一个on-success事件，并将返回值返回给表单
+    bindUploadSuccess(fields) {
+      // eslint-disable-next-line array-callback-return
+      fields.map(item => {
+        if (item.action) {
+          item['on-success'] = (res, file, fileList) => {
+            // 构造后端接口所需 文件格式
+            const filePara = fileList.map(fileItem => ({
+              name: fileItem.name,
+              percentage: fileItem.percentage,
+              status: fileItem.status,
+              uid: fileItem.uid,
+              url: fileItem.response.data.url,
+              size: fileItem.size
+            }))
+            setValue.call(this, filePara, item.__config__, item)
+          }
+        }
       })
     },
     resetForm() {
