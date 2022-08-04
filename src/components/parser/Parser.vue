@@ -185,7 +185,7 @@ export default {
               percentage: fileItem.percentage,
               status: fileItem.status,
               uid: fileItem.uid,
-              url: fileItem.response.data.url,
+              url: fileItem.response.url,
               size: fileItem.size
             }))
             setValue.call(this, filePara, item.__config__, item)
