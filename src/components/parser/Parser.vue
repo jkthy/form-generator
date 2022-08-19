@@ -135,7 +135,6 @@ export default {
     this.initFormData(data.formConfCopy.fields, data[this.formConf.formModel])
     this.buildRules(data.formConfCopy.fields, data[this.formConf.formRules])
     // 在data里对上传文件数据进行拦截
-    debugger
     this.bindUploadSuccess(data.formConfCopy.fields)
     return data
   },
